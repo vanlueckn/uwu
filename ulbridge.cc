@@ -147,6 +147,7 @@ extern "C" ULBAPI void ulbridge_init(bool gpu) {
   Platform::instance().set_file_system(GetPlatformFileSystem("."));
   Platform::instance().set_logger(GetDefaultLogger("ultralight.log"));
   // Create the library
+  
   renderer = Renderer::Create();
 }
 
@@ -226,6 +227,7 @@ struct Request
 
 extern "C" ULBAPI void ulbridge_render()
 {
+  renderer->RefreshDisplay(0);
   renderer->Render();
 }
 
@@ -454,6 +456,7 @@ static void ulbridge_loop()
   while (!stopThread)
   {
     ULDEBUG("renderer...");
+    renderer->RefreshDisplay(0);
     renderer->Update();
     renderer->Render();
     if (callback)
